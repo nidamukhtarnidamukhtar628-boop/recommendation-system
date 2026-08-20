@@ -14,8 +14,14 @@ app = Flask(__name__)
 # ============================================
 # Database Configuration
 # ============================================
-mysql_password = os.getenv('MYSQL_PASSWORD')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:{mysql_password}@localhost/smartrec_db'
+database_url = os.getenv('DATABASE_URL')
+
+if database_url:
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+else:
+    mysql_password = os.getenv('MYSQL_PASSWORD')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://root:{mysql_password}@localhost/smartrec_db'
+
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 db.init_app(app)
