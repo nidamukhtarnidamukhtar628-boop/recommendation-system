@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}SmartRec - Home{% endblock %}
+
+{% block content %}
+    <div class="hero">
+        <h1>🎬 Discover Movies You'll Love</h1>
+        <p>AI-powered recommendations based on genre, story and keywords</p>
+        <form class="hero-search d-flex" action="/search" method="get">
+            <input class="form-control" type="search" name="query" placeholder="Search a movie...">
+            <button class="btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
+
+    <div class="section-heading">
+        <h4 class="m-0">Featured Movies</h4>
+        <div class="line"></div>
+    </div>
+
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card h-100">
+                <a href="/movie/{{ movie.id }}">
+                    <img src="{{ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+                </a>
+                <div class="card-body">
+                    <h6 class="card-title">{{ movie.title }}</h6>
+                    <span class="genre-pill">{{ movie.genres.split(' ')[0] if movie.genres else 'N/A' }}</span>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span class="rating-badge">⭐ {{ movie.rating }}</span>
+                        <form method="POST" action="/favorite/{{ movie.id }}" class="m-0 fav-form" data-movie-id="{{ movie.id }}">
+                            <input type="hidden" name="movie_title" value="{{ movie.title }}">
+                            <button type="submit" class="fav-btn">
+                                {% if movie.id in favorite_ids %}
+                                    <i class="fa-solid fa-heart"></i>
+                                {% else %}
+                                    <i class="fa-regular fa-heart"></i>
+                                {% endif %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

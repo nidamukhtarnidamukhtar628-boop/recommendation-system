@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - SmartRec{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-icon">
+            <i class="fa-solid fa-film"></i>
+        </div>
+        <h2>Welcome Back</h2>
+        <p class="auth-subtitle">Login to continue to SmartRec</p>
+
+        {% if error %}
+        <div class="alert alert-danger py-2">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="input-group-custom">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" class="form-control" name="email" placeholder="Email address" required>
+            </div>
+            <div class="input-group-custom">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-gradient w-100">Login</button>
+        </form>
+
+        <p class="auth-footer">Don't have an account? <a href="/register">Sign up</a></p>
+    </div>
+</div>
+{% endblock %}
